@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Informasi Komunitas Belajar (Kombel) - Halmahera Utara 2026</title>
+    <title>Sistem Informasi Kombel Halmahera Utara 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
@@ -16,14 +16,13 @@
                     },
                     colors: {
                         primary: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            900: '#0c4a6e',
-                        },
-                        accent: '#f59e0b'
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
                     }
                 }
             }
@@ -31,15 +30,14 @@
     </script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #334155;
+            background-color: #f3f4f6;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        .tab-active {
+            border-bottom: 2px solid #2563eb;
+            color: #2563eb;
+            font-weight: 600;
         }
         .fade-in {
             animation: fadeIn 0.3s ease-in-out;
@@ -48,12 +46,13 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Custom scrollbar for better aesthetics */
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #f1f1f1; 
+            border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1; 
@@ -64,450 +63,360 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col relative overflow-x-hidden">
-    <!-- Background Design -->
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary-100/50 blur-[100px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-100/50 blur-[120px]"></div>
-    </div>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
 
-    <header class="relative z-10 bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary-500/30">
-                        <i class="fas fa-book-open text-xl"></i>
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary-600 text-white p-2 rounded-lg shadow-lg shadow-primary-500/30">
+                        <i class="fas fa-graduation-cap text-xl"></i>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900 leading-tight">Sistem Pencarian Kombel</h1>
-                        <p class="text-sm text-gray-500 font-medium">Kabupaten Halmahera Utara &bull; Tahun 2026</p>
+                        <h1 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight">Data Kombel 2026</h1>
+                        <p class="text-sm text-gray-500 font-medium">Kabupaten Halmahera Utara</p>
                     </div>
-                </div>
-                <div class="text-right hidden md:block">
-                    <p class="text-sm font-semibold text-primary-700">Dinas Pendidikan & Kebudayaan</p>
-                    <p class="text-xs text-gray-500">Kabupaten Halmahera Utara</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="relative z-10 flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <main class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
         
-        <!-- Tab Navigation -->
-        <div class="flex justify-center mb-8">
-            <div class="inline-flex bg-gray-100/80 p-1 rounded-xl shadow-sm border border-gray-200 backdrop-blur-sm">
-                <button id="tab-kombel-to-sekolah" class="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus:outline-none bg-white text-primary-700 shadow shadow-gray-200" onclick="switchTab('kombel-to-sekolah')">
-                    <i class="fas fa-search-location mr-2"></i>Cari Berdasarkan Kombel
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div class="flex border-b border-gray-200">
+                <button onclick="switchTab('searchSchool')" id="tab-searchSchool" class="flex-1 py-4 px-6 text-center text-sm md:text-base font-medium text-gray-500 hover:text-primary-600 transition-colors tab-active focus:outline-none">
+                    <i class="fas fa-search mr-2"></i>Cari Nama Sekolah
                 </button>
-                <button id="tab-sekolah-to-kombel" class="px-6 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition-all duration-200 focus:outline-none" onclick="switchTab('sekolah-to-kombel')">
-                    <i class="fas fa-school mr-2"></i>Cari Berdasarkan Sekolah
+                <button onclick="switchTab('searchKombel')" id="tab-searchKombel" class="flex-1 py-4 px-6 text-center text-sm md:text-base font-medium text-gray-500 hover:text-primary-600 transition-colors focus:outline-none">
+                    <i class="fas fa-filter mr-2"></i>Filter Jenis Kombel
                 </button>
             </div>
-        </div>
 
-        <!-- SECTION 1: Cari Sekolah Berdasarkan Kombel -->
-        <div id="section-kombel-to-sekolah" class="glass-card rounded-2xl p-6 md:p-8 max-w-4xl mx-auto fade-in">
-            <div class="mb-6 pb-4 border-b border-gray-100">
-                <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                    <span class="bg-primary-100 text-primary-700 p-2 rounded-lg"><i class="fas fa-filter"></i></span>
-                    Filter Pencarian Sekolah
-                </h2>
-                <p class="text-sm text-gray-500 mt-1">Pilih jenis dan nama komunitas belajar untuk melihat daftar sekolah.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Dropdown Jenis Kombel -->
-                <div class="space-y-2">
-                    <label for="jenisKombel" class="block text-sm font-semibold text-gray-700">Jenis Kombel <span class="text-red-500">*</span></label>
+            <div id="view-searchSchool" class="p-6 md:p-8">
+                <div class="mb-6">
+                    <label for="schoolInput" class="block text-sm font-semibold text-gray-700 mb-2">Masukkan Nama Sekolah</label>
                     <div class="relative">
-                        <select id="jenisKombel" class="w-full pl-4 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 rounded-xl bg-gray-50 border appearance-none transition-colors" onchange="updateNamaKombelOptions()">
-                            <option value="">-- Pilih Jenis Kombel --</option>
-                            <option value="Gugus TK/PAUD">Gugus TK/PAUD</option>
-                            <option value="Gugus SD">Gugus SD</option>
-                            <option value="Klaster SMP">Klaster SMP</option>
-                            <option value="Antar Sekolah SD">Antar Sekolah SD</option>
-                            <option value="Antar Sekolah SMP">Antar Sekolah SMP</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                            <i class="fas fa-chevron-down text-sm"></i>
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-school text-gray-400"></i>
                         </div>
+                        <input type="text" id="schoolInput" class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all sm:text-sm" placeholder="Contoh: TK ABADI GAMSUNGI atau SD INPRES...">
+                        <button onclick="searchBySchool()" class="absolute inset-y-1 right-1 px-4 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors">
+                            Cari
+                        </button>
                     </div>
-                </div>
-
-                <!-- Dropdown Nama Kombel -->
-                <div class="space-y-2">
-                    <label for="namaKombel" class="block text-sm font-semibold text-gray-700">Nama Kombel <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <select id="namaKombel" class="w-full pl-4 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 rounded-xl bg-gray-50 border appearance-none transition-colors disabled:bg-gray-200 disabled:text-gray-400" disabled onchange="tampilkanSekolah()">
-                            <option value="">-- Pilih Jenis Kombel Terlebih Dahulu --</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                            <i class="fas fa-chevron-down text-sm"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hasil Pencarian Sekolah -->
-            <div id="hasilSekolahContainer" class="mt-8 hidden fade-in">
-                <div class="bg-primary-50 rounded-xl p-5 border border-primary-100">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-primary-900 mb-1" id="judulHasilKombel">Nama Kombel</h3>
-                            <p class="text-sm text-primary-700 font-medium mb-4" id="subjudulJenisKombel">Jenis Kombel</p>
-                        </div>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800 border border-primary-200" id="totalSekolahBadge">
-                            0 Sekolah
-                        </span>
-                    </div>
-                    
-                    <div class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-                        <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center gap-2">
-                            <i class="fas fa-list-ul text-gray-400"></i>
-                            <span class="text-sm font-semibold text-gray-700">Daftar Sekolah Anggota</span>
-                        </div>
-                        <ul id="daftarSekolah" class="divide-y divide-gray-100 max-h-[400px] overflow-y-auto">
-                            <!-- List sekolah will be injected here -->
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Empty State Kombel to Sekolah -->
-            <div id="emptyStateSekolah" class="mt-8 text-center py-10 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-                <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
-                    <i class="fas fa-search text-2xl"></i>
-                </div>
-                <h3 class="text-base font-semibold text-gray-700">Belum ada data yang dipilih</h3>
-                <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">Silahkan pilih Jenis Kombel dan Nama Kombel di atas untuk melihat daftar sekolah.</p>
-            </div>
-        </div>
-
-        <!-- SECTION 2: Cari Kombel Berdasarkan Sekolah -->
-        <div id="section-sekolah-to-kombel" class="glass-card rounded-2xl p-6 md:p-8 max-w-4xl mx-auto hidden">
-            <div class="mb-6 pb-4 border-b border-gray-100">
-                <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                    <span class="bg-accent/20 text-accent p-2 rounded-lg"><i class="fas fa-school"></i></span>
-                    Cari Data Kombel Sekolah
-                </h2>
-                <p class="text-sm text-gray-500 mt-1">Masukkan nama sekolah untuk mengetahui data komunitas belajarnya.</p>
-            </div>
-
-            <div class="relative max-w-2xl mx-auto">
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-gray-400"></i>
-                    </div>
-                    <input type="text" id="searchInputSekolah" class="block w-full pl-11 pr-4 py-4 text-base border-gray-300 rounded-xl focus:ring-primary-500 focus:border-primary-500 bg-white shadow-sm border transition-shadow hover:shadow-md" placeholder="Ketik nama sekolah (contoh: SD INPRES WARI)..." autocomplete="off" onkeyup="cariSekolah()">
-                    
-                    <button id="clearSearchBtn" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 hidden" onclick="clearSearch()">
-                        <i class="fas fa-times-circle"></i>
-                    </button>
+                    <p class="mt-2 text-xs text-gray-500"><i class="fas fa-info-circle mr-1"></i>Ketik nama sekolah lalu klik Cari atau tekan Enter.</p>
                 </div>
                 
-                <!-- Autocomplete Dropdown (Optional feature, implementing simplified list below input) -->
-            </div>
-
-            <!-- Hasil Pencarian Kombel -->
-            <div id="hasilKombelContainer" class="mt-8 hidden fade-in max-w-2xl mx-auto">
-                <!-- Content will be injected here -->
-            </div>
-
-            <!-- Empty State Sekolah to Kombel -->
-            <div id="emptyStateKombel" class="mt-8 text-center py-12 max-w-2xl mx-auto">
-                <img src="https://placehold.co/150x150/f1f5f9/94a3b8?text=Search" alt="Cari" class="mx-auto rounded-full mb-4 w-20 h-20 opacity-50">
-                <h3 class="text-base font-semibold text-gray-700">Mulai Pencarian</h3>
-                <p class="text-sm text-gray-500 mt-1">Ketik minimal 3 karakter nama sekolah untuk melihat detail Kombel.</p>
-            </div>
-            
-            <div id="notFoundStateKombel" class="mt-8 text-center py-10 bg-red-50 rounded-xl border border-red-100 hidden max-w-2xl mx-auto fade-in">
-                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 text-red-500">
-                    <i class="fas fa-exclamation-triangle"></i>
+                <div id="schoolSearchResult" class="hidden mt-6">
+                    <!-- Results will be injected here -->
                 </div>
-                <h3 class="text-base font-semibold text-red-800">Sekolah Tidak Ditemukan</h3>
-                <p class="text-sm text-red-600 mt-1">Coba periksa kembali ejaan nama sekolah.</p>
+            </div>
+
+            <div id="view-searchKombel" class="p-6 md:p-8 hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="jenisKombelSelect" class="block text-sm font-semibold text-gray-700 mb-2">Pilih Jenis Kombel</label>
+                        <div class="relative">
+                            <select id="jenisKombelSelect" onchange="updateKombelDropdown()" class="block w-full pl-4 pr-10 py-3 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 rounded-xl transition-all appearance-none bg-white">
+                                <option value="" disabled selected>-- Pilih Jenis Kombel --</option>
+                                <!-- Options populated by JS -->
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                <i class="fas fa-chevron-down text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="namaKombelSelect" class="block text-sm font-semibold text-gray-700 mb-2">Pilih Nama Kombel</label>
+                        <div class="relative">
+                            <select id="namaKombelSelect" onchange="showKombelDetails()" class="block w-full pl-4 pr-10 py-3 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 rounded-xl transition-all appearance-none bg-gray-50" disabled>
+                                <option value="" disabled selected>-- Pilih Jenis Kombel Dahulu --</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                <i class="fas fa-chevron-down text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="kombelFilterResult" class="hidden mt-6">
+                    <!-- Results will be injected here -->
+                </div>
             </div>
         </div>
-
     </main>
 
-    <footer class="bg-gray-900 text-white py-8 mt-auto z-10 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center border border-gray-700">
-                    <i class="fas fa-layer-group text-primary-400 text-sm"></i>
-                </div>
-                <div>
-                    <p class="text-sm font-semibold">Data Kombel Halmahera Utara</p>
-                    <p class="text-xs text-gray-400">&copy; 2026 Dinas Pendidikan</p>
-                </div>
-            </div>
-            <div class="text-sm text-gray-400">
-                <p>Designed for Kabupaten Halmahera Utara</p>
-            </div>
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm text-gray-500">
+                &copy; 2026 Sistem Informasi Komunitas Belajar (Kombel) Kabupaten Halmahera Utara.
+            </p>
         </div>
     </footer>
 
     <script>
-        // Data Structure
-        const dataKombel = {
+        // Centralized Data Structure based on the provided document
+        const kombelData = {
             "Gugus TK/PAUD": {
                 "TK/PAUD Gugus Tobelo 1": [
-                    "TK ABADI GAMSUNGI", "TK DHARMA WANITA TOBELO", "TK IMANUEL GAMSUNGI", "TK KRISTEN TUNAS ANUGERAH PLUS GAMSUNGI",
-                    "TK PEMBINA", "KB PAUD ABADI GAMSUNGI", "KB PAUD AL FAJRI", "PAUD MORENE", "PPAUD AT - TAQWA",
-                    "PAUD SENTRUM LEMBAH KEMULIAAN TOBELO", "SPS PAUD DHARMA WANITA TOBELO", "SPS PAUD IMANUEL GAMSUNGI 2",
-                    "SPS PAUD PONDOK DAUN", "TK ALKHAIRAAT TOBELO", "TK BUKIT ZAITUN", "TK HATI BUNDA GOSOMA", "TK KARMEL",
-                    "TK KASIH ARMITA", "TK MANGGALA PERKASA", "KB PAUD ALKHAIRAAT TOBELO"
+                    "TK ABADI GAMSUNGI", "TK DHARMA WANITA TOBELO", "TK IMANUEL GAMSUNGI", "TK KRISTEN TUNAS ANUGERAH PLUS GAMSUNGI", 
+                    "TK PEMBINA", "KB PAUD ABADI GAMSUNGI", "KB PAUD AL FAJRI", "PAUD MORENE", "PPAUD AT - TAQWA", 
+                    "PAUD SENTRUM LEMBAH KEMULIAAN TOBELO", "SPS PAUD DHARMA WANITA TOBELO", "SPS PAUD IMANUEL GAMSUNGI 2", 
+                    "SPS PAUD PONDOK DAUN", "TK ALKHAIRAAT TOBELO", "TK BUKIT ZAITUN", "TK KARMEL", "TK KASIH ARMITA", 
+                    "TK MANGGALA PERKASA", "KB PAUD ALKHAIRAAT TOBELO"
                 ],
                 "TK/PAUD Gugus Tobelo 2": [
-                    "KB PAUD BUKIT ZAITUN", "KB PAUD HATI BUNDA", "KB PAUD KARMEL", "KB PAUD KASIH ARMITA", "PAUD MANGGALA PERKASA",
-                    "TK ELIM GURA", "TK KARTIKA JAYA", "TK RK GONZALO VELOSO GURA", "KB INJILI", "KB PAUD MUTIARA HATI",
-                    "PPAUD WAYAMATO", "KB PAUD HOHIDIAI KAKARA", "KB PAUD O,WOWANGO", "TK ESTER", "TK KASIH INDAH",
+                    "KB PAUD BUKIT ZAITUN", "KB PAUD HATI BUNDA", "KB PAUD KARMEL", "KB PAUD KASIH ARMITA", "PAUD MANGGALA PERKASA", 
+                    "TK ELIM GURA", "TK KARTIKA JAYA", "TK RK GONZALO VELOSO GURA", "KB INJILI", "KB PAUD MUTIARA HATI", 
+                    "PPAUD WAYAMATO", "KB PAUD HOHIDIAI KAKARA", "KB PAUD O,WOWANGO", "TK ESTER", "TK KASIH INDAH", 
                     "KB PAUD FLOBAMORA", "KB MAHAILOA", "TK IKHTHUS WARI", "KB PAUD IKTHUS", "TK MATAHARI TERBIT"
                 ],
                 "TK/PAUD Gugus Tobelo Utara": [
-                    "TK ALKHAIRAAT GORUA SELATAN", "TK AR RAHMAN", "TK BETHESDA", "TK BINA GENERASI", "KB AISYIAH",
-                    "KB MAULIDA FITRIA", "KB PAUD BETHANIA MEDE", "KB PAUD BETHESDA", "KB PAUD BINA GENERASI", "KB PAUD IMANUEL",
+                    "TK ALKHAIRAAT GORUA SELATAN", "TK AR RAHMAN", "TK BETHESDA", "TK BINA GENERASI", "KB AISYIAH", 
+                    "KB MAULIDA FITRIA", "KB PAUD BETHANIA MEDE", "KB PAUD BETHESDA", "KB PAUD BINA GENERASI", "KB PAUD IMANUEL", 
                     "KELOMPOK BERMAIN TUNAS BANGSA", "PAUD AL - ISLAH", "PPAUD ARRAHMAN"
                 ],
                 "TK/PAUD Gugus Tobelo Tengah": [
-                    "TK INDAH KALI PITU", "TK ELIM WOSIA TANJUNG NIARA", "TK HALMAHERA KIDS SCHOOL", "TK LAHAMAWAY", "TK MEKAR WKO",
-                    "TK MORIA PITU", "TK RAJAWALI", "KB PAUD BERSEHATI", "KB PAUD BUAH HATI", "KB PAUD EDELWEYS", "KB PAUD ELIM WOSIA",
-                    "KB PAUD INDAH KALI PITU", "KB PAUD LAHAMAWAY", "KB PAUD MELATI", "KB PAUD PELITA", "KB PAUD RAJAWALI",
+                    "TK INDAH KALI PITU", "TK ELIM WOSIA TANJUNG NIARA", "TK HALMAHERA KIDS SCHOOL", "TK LAHAMAWAY", "TK MEKAR WKO", 
+                    "TK MORIA PITU", "TK RAJAWALI", "KB PAUD BERSEHATI", "KB PAUD BUAH HATI", "KB PAUD EDELWEYS", "KB PAUD ELIM WOSIA", 
+                    "KB PAUD INDAH KALI PITU", "KB PAUD LAHAMAWAY", "KB PAUD MELATI", "KB PAUD PELITA", "KB PAUD RAJAWALI", 
                     "PAUD BUKIT SION", "PPAUD HIMOMIKOLI", "PPAUD MEKAR WKO"
                 ],
                 "TK/PAUD Gugus Tobelo Selatan": [
-                    "TK BPD HORIMOI", "TK EFRATA EFI EFI", "TK HILO TOMAHALU", "TK KASIH IBU KUPA - KUPA", "TK PELANGI KASIH PACA",
-                    "TK REHOBOTH GAMHOKU", "KB PAUD ANGGREK BULAN TP.PKK", "KB PAUD BPD HORIMOI", "KB PAUD BURANJITA", "KB PAUD HERO",
-                    "KB PAUD HORIMOI", "KB PAUD KASIH IBU KUPA - KUPA", "KB PAUD SILO TOMAHALU", "KELOMPOK BERMAIN ANUGERAH TOBE",
-                    "KELOMPOK BERMAIN PAUD NEGERI KUPA-KUPA", "PAUD GENERASI CERDAS", "PAUD REHOBOTH GAMHOKU", "PPAUD DULOS",
+                    "TK BPD HORIMOI", "TK EFRATA EFI EFI", "TK HILO TOMAHALU", "TK KASIH IBU KUPA - KUPA", "TK PELANGI KASIH PACA", 
+                    "TK REHOBOTH GAMHOKU", "KB PAUD ANGGREK BULAN TP.PKK", "KB PAUD BPD HORIMOI", "KB PAUD BURANJITA", "KB PAUD HERO", 
+                    "KB PAUD HORIMOI", "KB PAUD KASIH IBU KUPA - KUPA", "KB PAUD SILO TOMAHALU", "KELOMPOK BERMAIN ANUGERAH TOBE", 
+                    "KELOMPOK BERMAIN PAUD NEGERI KUPA-KUPA", "PAUD GENERASI CERDAS", "PAUD REHOBOTH GAMHOKU", "PPAUD DULOS", 
                     "PPAUD LAHAIROI", "PAUD GALED", "SPS PAUD GETSEMANI"
                 ],
                 "TK/PAUD Gugus Tobelo Timur": [
-                    "TK LESTARI METI", "KB PAUD GRACIA", "KB PAUD HORIGAO 2", "KB PAUD LESTARI", "KB PAUD MAGALIHO INO",
+                    "TK LESTARI METI", "KB PAUD GRACIA", "KB PAUD HORIGAO 2", "KB PAUD LESTARI", "KB PAUD MAGALIHO INO", 
                     "KB PAUD SERUNI", "KELOMPOK BERMAIN CERIA", "KELOMPOK BERMAIN PAUD SEHATI TODOKUIHA", "SPS PAUD RORIWO"
                 ],
                 "TK/PAUD Gugus Tobelo Barat": [
-                    "TK HOHIDIAI", "TK HORIWO KUSURI", "KB PAUD AZZAHRA 2", "KB PAUD DARARONO", "KB PAUD PELANGI",
+                    "TK HOHIDIAI", "TK HORIWO KUSURI", "KB PAUD AZZAHRA 2", "KB PAUD DARARONO", "KB PAUD PELANGI", 
                     "KB PAUD TUNAS BANGSA", "KB PAUD TUNAS DESAKU", "PPAUD AZZAHRA I", "SPS PAUD GEMBIRA"
                 ],
                 "TK/PAUD Gugus Galela": [
-                    "TK AISYAH SOASIO", "TK DHARMA WANITA SOA SIO", "KB PAUD DHARMA WANITA GALELA", "KB PAUD SATU HATI",
+                    "TK AISYAH SOASIO", "TK DHARMA WANITA SOA SIO", "KB PAUD DHARMA WANITA GALELA", "KB PAUD SATU HATI", 
                     "KB PAUD SOASIO MANGONGANO", "PAUD TOLONGA", "SPS PAUD AISYAH", "SPS PAUD TUNAS BANGSA"
                 ],
                 "TK/PAUD Gugus Galela Selatan": [
-                    "TK HANDAYANI", "KB PAUD AL-ISTIQAMAH", "KB PAUD BABUSALAM", "KB PAUD DABILOHA", "KB PAUD DOKUMALOHA",
-                    "KB PAUD MALOHA IGOBULA", "KB PAUD MIYA GINA", "KB PAUD SINAR KASIH BALE", "PPAUD MIYA NGONGANO 1",
+                    "TK HANDAYANI", "KB PAUD AL-ISTIQAMAH", "KB PAUD BABUSALAM", "KB PAUD DABILOHA", "KB PAUD DOKUMALOHA", 
+                    "KB PAUD MALOHA IGOBULA", "KB PAUD MIYA GINA", "KB PAUD SINAR KASIH BALE", "PPAUD MIYA NGONGANO 1", 
                     "PPAUD TONGONE", "SPS PAUD HANDAYANI"
                 ],
                 "TK/PAUD Gugus Galela Barat": [
-                    "TAMAN KANAK-KANAK KAIROS SAMUDA", "TK DODARA DOKULAMO", "KB PAUD CORI JAYA", "KB PAUD AWI DODARA",
-                    "KB PAUD BERKARYA", "KB PAUD DAHLIA", "KB PAUD DODARA", "KB PAUD MIYALOHA", "KB PAUD NITA DUMA",
+                    "TAMAN KANAK-KANAK KAIROS SAMUDA", "TK DODARA DOKULAMO", "KB PAUD CORI JAYA", "KB PAUD AWI DODARA", 
+                    "KB PAUD BERKARYA", "KB PAUD DAHLIA", "KB PAUD DODARA", "KB PAUD MIYALOHA", "KB PAUD NITA DUMA", 
                     "KB PAUD SINAR KASIH SAMUDA", "KB POMAKOMOTE NGIDIHO", "SPS PAUD RUKUN BPD", "SPS PAUD YASIN GAMSUNGI"
                 ],
                 "TK/PAUD Gugus Galela Utara": [
-                    "TAMAN KANAK KANAK GENERASI KUANTUM", "TK HARAPAN BANGSA PELITA", "TK TERPADU TUNAS BANGSA",
-                    "KB PAUD GENERASI KUANTUM", "KB PAUD HARAPAN BANGSA PELITA", "KB PAUD KASIH BUNDA", "KB PAUD LAPI",
-                    "KB PAUD MIA NGONGANO", "KB PAUD PERDAMAIAN", "KB PAUD SARPISA CENTER", "KB PAUD TUMBUH MEKAR",
-                    "KB PAUD TUNAS BANGSA", "KB PAUD TUNAS HARAPAN TOGASA", "KELOMPOK BERMAIN (KB) NURUL YAQIN",
+                    "TAMAN KANAK KANAK GENERASI KUANTUM", "TK HARAPAN BANGSA PELITA", "TK TERPADU TUNAS BANGSA", 
+                    "KB PAUD GENERASI KUANTUM", "KB PAUD HARAPAN BANGSA PELITA", "KB PAUD KASIH BUNDA", "KB PAUD LAPI", 
+                    "KB PAUD MIA NGONGANO", "KB PAUD PERDAMAIAN", "KB PAUD SARPISA CENTER", "KB PAUD TUMBUH MEKAR", 
+                    "KB PAUD TUNAS BANGSA", "KB PAUD TUNAS HARAPAN TOGASA", "KELOMPOK BERMAIN (KB) NURUL YAQIN", 
                     "PAUD TUNAS BANGSA LIMAU", "SPS PAUD JOBUBU"
                 ],
                 "TK/PAUD Gugus Kao Utara": [
-                    "TK ADVENT BORI", "TK EFRATA TONUO", "TK EKLESIA DORO", "TK EPHIPANIA BORI", "TK EXODUS GAMLAHA",
-                    "TK MUTIARA", "TK NUHARORIWO GAMLAHA", "TK PELANGI KASIH", "TK PERTIWI PEDIWANG", "TK SOLA GRACIA",
-                    "TK TALITAKUMI DARU", "KB PAUD ENJEL", "KB PAUD KRISTEN GEORGE RORIWO", "KB PAUD MUTIARA",
-                    "KB PAUD NUHARORIWO", "KB PAUD PUPUPI", "KB PAUD TALITAKUMI", "KB PAUD TERPADU SION", "KB PAUD TUNAS ANUGERAH 2",
-                    "KB SOLA GRACIA", "PAUD DALYES BORI", "PPAUD DALIMA", "PPAUD WOYAMINO", "PAUD EPIPHANIA", "SPS PAUD DALUKIHA",
+                    "TK ADVENT BORI", "TK EFRATA TONUO", "TK EKLESIA DORO", "TK EPHIPANIA BORI", "TK EXODUS GAMLAHA", 
+                    "TK MUTIARA", "TK NUHARORIWO GAMLAHA", "TK PELANGI KASIH", "TK PERTIWI PEDIWANG", "TK SOLA GRACIA", 
+                    "TK TALITAKUMI DARU", "KB PAUD ENJEL", "KB PAUD KRISTEN GEORGE RORIWO", "KB PAUD MUTIARA", 
+                    "KB PAUD NUHARORIWO", "KB PAUD PUPUPI", "KB PAUD TALITAKUMI", "KB PAUD TERPADU SION", "KB PAUD TUNAS ANUGERAH 2", 
+                    "KB SOLA GRACIA", "PAUD DALYES BORI", "PPAUD DALIMA", "PPAUD WOYAMINO", "PAUD EPIPHANIA", "SPS PAUD DALUKIHA", 
                     "SPS PAUD KAPITA ILO", "SPS PAUD KASIH BUNDA TUNUO", "SPS PAUD KASIH IBU", "SPS PAUD MELATI", "SPS PAUD TOGIHORO"
                 ],
                 "TK/PAUD Gugus Kao": [
-                    "TK DHARMA WANITA KAO", "TK HOHIDIAI", "TK JATI LUHUR", "TK PANCARAN KASIH", "TK PERISAI KARUNIA",
-                    "TK PUTU PUTRAYASA", "KB PAUD BHINEKA", "KB PAUD MAKA DUSUNG MALOA", "KB PAUD PERISAI KARUNIA",
-                    "KB PAUD PUCUK KEMBANG", "KB PAUD PUTU PUTRAYASA", "PAUD KARUNIA BUNDA", "PAUD KASIH BERSAUDARA",
-                    "PAUD KUSU MARAHAI", "PAUD PANCARAN KASIH II", "PAUD PERISAI KASIH", "PAUD HOHIDIAI", "SPS PAUD JATI LUHUR",
+                    "TK DHARMA WANITA KAO", "TK HOHIDIAI", "TK JATI LUHUR", "TK PANCARAN KASIH", "TK PERISAI KARUNIA", 
+                    "TK PUTU PUTRAYASA", "KB PAUD BHINEKA", "KB PAUD MAKA DUSUNG MALOA", "KB PAUD PERISAI KARUNIA", 
+                    "KB PAUD PUCUK KEMBANG", "KB PAUD PUTU PUTRAYASA", "PAUD KARUNIA BUNDA", "PAUD KASIH BERSAUDARA", 
+                    "PAUD KUSU MARAHAI", "PAUD PANCARAN KASIH II", "PAUD PERISAI KASIH", "PAUD HOHIDIAI", "SPS PAUD JATI LUHUR", 
                     "SPS PAUD LIGI - LIGI"
                 ],
                 "TK/PAUD Gugus Kao Barat": [
-                    "TK CINTA DAMAI TOLIWANG", "TK HARAPAN BARU PITAGO", "TK KASIH IBU TOLIWANG", "TK MEKAR TOLABIT",
-                    "TK MUKTITAMA MAKARTI", "TK TANGAN PENGHARAPAN SOAMAETEK", "KB SATU DALAM KASIH", "KB HARAPAN BARU TUGUIS",
-                    "KB PAUD BERINGIN AGUNG", "KB PAUD BUNDA LELEANI", "KB PAUD HARAPAN BARU", "KB PAUD KASIH BUNDA",
-                    "KB PAUD MUKTITAMA", "KB PAUD SINAR BARU", "KB PAUD TANGAN PENGHARAPAN", "KB PAUD TUNAS BARU NGOALI",
+                    "TK CINTA DAMAI TOLIWANG", "TK HARAPAN BARU PITAGO", "TK KASIH IBU TOLIWANG", "TK MEKAR TOLABIT", 
+                    "TK MUKTITAMA MAKARTI", "TK TANGAN PENGHARAPAN SOAMAETEK", "KB SATU DALAM KASIH", "KB HARAPAN BARU TUGUIS", 
+                    "KB PAUD BERINGIN AGUNG", "KB PAUD BUNDA LELEANI", "KB PAUD HARAPAN BARU", "KB PAUD KASIH BUNDA", 
+                    "KB PAUD MUKTITAMA", "KB PAUD SINAR BARU", "KB PAUD TANGAN PENGHARAPAN", "KB PAUD TUNAS BARU NGOALI", 
                     "KB SINAR HARAPAN PARSEBA", "PAUD CINTA DAMAI TOLIWANG", "PAUD KASIH IBU TOLIWANG", "PAUD LINA PUTERA"
                 ],
                 "TK/PAUD Gugus Kao Teluk": [
-                    "KB BUDI BAKTI", "KB PAUD BINA TUNAS HARAPAN", "KB PAUD CAHAYA HATI IBU", "KB PAUD KANANGA",
-                    "KB PAUD KASIH", "KB PAUD R. A KARTINI", "KELOMPOK BERMAIN PERMATA BUNDA", "PAUD BAKTI 1",
-                    "PAUD TAMAN ILMU", "PAUD TUADA PALI", "PAUD TAOLAS JAYA"
+                    "KB BUDI BAKTI", "KB PAUD BINA TUNAS HARAPAN", "KB PAUD CAHAYA HATI IBU", "KB PAUD KANANGA", "KB PAUD KASIH", 
+                    "KB PAUD R. A KARTINI", "KELOMPOK BERMAIN PERMATA BUNDA", "PAUD BAKTI 1", "PAUD TAMAN ILMU", "PAUD TUADA PALI", 
+                    "PAUD TAOLAS JAYA"
                 ],
                 "TK/PAUD Gugus Malifut": [
-                    "PAUD NIA INO LA WO MADOTOKO B", "SPS PAUD NUSANTARA GOSOWONG", "KB AN-NISAA", "KB PAUD AKEPANAWA",
-                    "KB PAUD AL NAZWA", "KB PAUD HARAPAN BUNDA", "KB PAUD MAKATANOAN", "KB PAUD TABOBO PERMATA",
-                    "KB PAUD TUNAS BANGSA GAYOK", "KB PAUD WOYA MAKOAI", "PPAUD MEKAR" // Duplicates removed from raw data for clean UI
+                    "PAUD NIA INO LA WO MADOTOKO B", "SPS PAUD NUSANTARA GOSOWONG", "KB AN-NISAA", "KB PAUD AKEPANAWA", 
+                    "KB PAUD AL NAZWA", "KB PAUD HARAPAN BUNDA", "KB PAUD MAKATANOAN", "KB PAUD TABOBO PERMATA", 
+                    "KB PAUD TUNAS BANGSA GAYOK", "KB PAUD WOYA MAKOAI", "PPAUD MEKAR"
                 ],
                 "TK/PAUD Gugus Loloda Utara": [
-                    "TK AL-HIKMAH GALAO", "TK SININGA MOI", "KB PAUD EL ROI", "KB PAUD MUTIARA", "KB PAUD TUNAS MUDA MOMOJIU",
-                    "KB PAUD WORIO TATE", "KELOMPOK BERMAIN EMBUN HERMON", "KELOMPOK BERMAIN GEMILANG", "PAUD AIR TERJUN",
+                    "TK AL-HIKMAH GALAO", "TK SININGA MOI", "KB PAUD EL ROI", "KB PAUD MUTIARA", "KB PAUD TUNAS MUDA MOMOJIU", 
+                    "KB PAUD WORIO TATE", "KELOMPOK BERMAIN EMBUN HERMON", "KELOMPOK BERMAIN GEMILANG", "PAUD AIR TERJUN", 
                     "PAUD NURUL JANNAH", "PAUD QUEEN GLORY", "PAUD SOLA GRACIA", "PAUD EBEN HAEZER"
                 ],
                 "TK/PAUD Gugus Loloda Kepulauan": [
-                    "TK AL-HIDAYAH", "TK HARAPAN BANGSA", "KB NURUL ILMI", "KB PAUD BUNGA BANGSA CERA", "KB PAUD MINISINYIA",
-                    "PAUD WALEGA WORIWO", "PAUD NIMILEGA", "SPS PAUD BARU MEKAR", "SPS PAUD HARAPAN BANGSA", "SPS PAUD MULIA DAGASULI",
-                    "SPS PAUD TUNAS HARAPAN 02"
+                    "TK AL-HIDAYAH", "TK HARAPAN BANGSA", "KB NURUL ILMI", "KB PAUD BUNGA BANGSA CERA", "KB PAUD MINISINYIA", 
+                    "PAUD WALEGA WORIWO", "PAUD NIMILEGA", "SPS PAUD BARU MEKAR", "SPS PAUD HARAPAN BANGSA", 
+                    "SPS PAUD MULIA DAGASULI", "SPS PAUD TUNAS HARAPAN 02"
                 ]
             },
+            
             "Gugus SD": {
                 "SD Gugus 1 Tobelo": [
-                    "SD ADVENT PUNE", "SD GMIH 2 TOBELO", "SD INPRES BERTINGKAT", "SD INPRES WARI", "SD NASKAT B. T. 2 TOBELO",
+                    "SD ADVENT PUNE", "SD GMIH 2 TOBELO", "SD INPRES BERTINGKAT", "SD INPRES WARI", "SD NASKAT B. T. 2 TOBELO", 
                     "SD NEGERI 3 TOBELO", "SD NEGERI 5 TOBELO", "SD NEGERI TAGALAYA"
                 ],
                 "SD Gugus 2 Tobelo": [
-                    "SD ALKHAIRAAT 2 TOBELO", "SD AN NUR GURA", "SD GMIH 1 TOBELO", "SD GMIH 4 TOBELO", "SD GMIH KUMO",
+                    "SD ALKHAIRAAT 2 TOBELO", "SD AN NUR GURA", "SD GMIH 1 TOBELO", "SD GMIH 4 TOBELO", "SD GMIH KUMO", 
                     "SD NASKAT B. T. 1 TOBELO", "SD NASKAT B. T. 3 TOBELO", "SD NEGERI 1 TOBELO", "SD NEGERI 2 TOBELO", "SD NEGERI 4 TOBELO"
                 ],
                 "SD Gugus 3 Tobelo": [
-                    "SD AL KHAIRAAT TOBELO", "SD GMIH 3 TOBELO", "SD GMIH KAKARA A", "SD HEIN NAMOTEMO", "SD INPRES 1 TOBELO",
-                    "SD INPRES GAMSUNGI", "SD ISLAMIYAH 1 TOBELO", "SD KRISTEN TUNAS ANUGERAH TOBELO", "SDS MANGGALA PERKASA",
+                    "SD AL KHAIRAAT TOBELO", "SD GMIH 3 TOBELO", "SD GMIH KAKARA A", "SD HEIN NAMOTEMO", "SD INPRES 1 TOBELO", 
+                    "SD INPRES GAMSUNGI", "SD ISLAMIYAH 1 TOBELO", "SD KRISTEN TUNAS ANUGERAH TOBELO", "SDS MANGGALA PERKASA", 
                     "SD RAHAI", "SD ISLAM TERPADU AL-KHAIRAAT TOBELO"
                 ],
                 "SD Gugus 4 Tobelo Utara": [
-                    "SD GMIH GORUA", "SD GMIH RUKO", "SD INPRES GORUA", "SD INPRES TOLONUO", "SD MUHAMMADIYAH TOLONUO",
+                    "SD GMIH GORUA", "SD GMIH RUKO", "SD INPRES GORUA", "SD INPRES TOLONUO", "SD MUHAMMADIYAH TOLONUO", 
                     "SD NEGERI LUARI", "SD NEGERI MEDE", "SD NEGERI POPILO"
                 ],
                 "SD Gugus 5 Tobelo Tengah": [
-                    "SD GMIH LINA INO", "SD GMIH MAHIA", "SD GMIH PITU", "SD GMIH WKO", "SD GMIH WOSIA", "SD INPRES 3 WOSIA",
+                    "SD GMIH LINA INO", "SD GMIH MAHIA", "SD GMIH PITU", "SD GMIH WKO", "SD GMIH WOSIA", "SD INPRES 3 WOSIA", 
                     "SD INPRES UPA", "SD INPRES WOSIA", "SD NEGERI KUSUMA KALIPITU", "SD RAJAWALI"
                 ],
                 "SD Gugus 6 Tobelo Selatan": [
-                    "SD GMIH EFI-EFI", "SD GMIH GAMHOKU", "SD GMIH KAKARA B", "SD GMIH KUPA-KUPA", "SD INPRES GAMHOKU",
+                    "SD GMIH EFI-EFI", "SD GMIH GAMHOKU", "SD GMIH KAKARA B", "SD GMIH KUPA-KUPA", "SD INPRES GAMHOKU", 
                     "SD INPRES KUPA-KUPA", "SD NEGERI TIOUA", "SD NEGERI TOMAHALU"
                 ],
                 "SD Gugus 7 Tobelo Selatan": [
-                    "SD GMIH PACA", "SD GMIH TOBE", "SD INPRES LELEOTO", "SD INPRES TALAGA PACA", "SD KGBI LELEOTO",
+                    "SD GMIH PACA", "SD GMIH TOBE", "SD INPRES LELEOTO", "SD INPRES TALAGA PACA", "SD KGBI LELEOTO", 
                     "SD NEGERI LEMAHINO", "SD NEGERI PACA"
                 ],
                 "SD Gugus 8 Tobelo Timur": [
-                    "SD GMIH KATANA", "SD GMIH MAWEA", "SD GMIH METI", "SD INPRES GONGA", "SD INPRES MAWEA", "SD INPRES METI",
+                    "SD GMIH KATANA", "SD GMIH MAWEA", "SD GMIH METI", "SD INPRES GONGA", "SD INPRES MAWEA", "SD INPRES METI", 
                     "SD INPRES YARO", "SD NEGERI GONGA PANTE", "SD NEGERI RANGO-RANGO"
                 ],
                 "SD Gugus 9 Tobelo Barat": [
-                    "SD INPRES GAMSUNGI 2", "SD INPRES KUSURI", "SD INPRES SUKAMAJU", "SD INPRES TOGOLIUA", "SD INPRES UPT TOGOLIUA",
+                    "SD INPRES GAMSUNGI 2", "SD INPRES KUSURI", "SD INPRES SUKAMAJU", "SD INPRES TOGOLIUA", "SD INPRES UPT TOGOLIUA", 
                     "SD NEGERI BIRINOA", "SD NEGERI KEKE", "SD NEGERI TOGIHORO", "SD NEGERI WANGONGIRA"
                 ],
                 "SD Gugus 10 Galela": [
                     "SD GMIH MAMUYA", "SD INPRES MAMUYA", "SD INPRES SIMAU", "SD INPRES SOASIO", "SD NEGERI SOASIO"
                 ],
                 "SD Gugus 11 Galela Selatan": [
-                    "SD GMIH SOAKONORA", "SD INPRES BALE", "SD INPRES SOAKONORA", "SD INPRES TOGAWA", "SD MUHAMMADIYAH 1 IGOBULA",
+                    "SD GMIH SOAKONORA", "SD INPRES BALE", "SD INPRES SOAKONORA", "SD INPRES TOGAWA", "SD MUHAMMADIYAH 1 IGOBULA", 
                     "SD MUHAMMADIYAH 2 IGOBULA", "SD MUHAMMADIYAH 3 TOGAWA", "SD NEGERI SEKI"
                 ],
                 "SD Gugus 12 Galela Barat": [
-                    "SD GMIH DOKULAMO", "SD GMIH DUMA", "SD GMIH ROKO", "SD GMIH SAMUDA", "SD GMIH SOATABARU", "SD INPRES GOTALAMO",
+                    "SD GMIH DOKULAMO", "SD GMIH DUMA", "SD GMIH ROKO", "SD GMIH SAMUDA", "SD GMIH SOATABARU", "SD INPRES GOTALAMO", 
                     "SD INPRES MAKETE", "SD NEGERI NGIDIHO"
                 ],
                 "SD Gugus 13 Galela Utara": [
                     "SD INPRES PELITA", "SD INPRES TAPE JERE", "SD NEGERI BERINGIN JAYA", "SD NEGERI SALUTA", "SD NEGERI TOGASA"
                 ],
                 "SD Gugus 14 Galela Utara": [
-                    "SD INPRES DODOWO", "SD INPRES SALIMULI", "SD NEGERI BOBISINGO", "SD NEGERI LALONGA", "SD NEGERI LIMAU",
+                    "SD INPRES DODOWO", "SD INPRES SALIMULI", "SD NEGERI BOBISINGO", "SD NEGERI LALONGA", "SD NEGERI LIMAU", 
                     "SD NEGERI TUTUMALOLEO"
                 ],
                 "SD Gugus 15 Kao Utara": [
-                    "SD GMIH BOBALE", "SD GMIH DARU", "SD GMIH DORO", "SD GMIH GAMLAHA", "SD NEGERI BOULAMO", "SD NEGERI DARU",
+                    "SD GMIH BOBALE", "SD GMIH DARU", "SD GMIH DORO", "SD GMIH GAMLAHA", "SD NEGERI BOULAMO", "SD NEGERI DARU", 
                     "SD NEGERI DORO"
                 ],
                 "SD Gugus 16 Kao Utara": [
-                    "SD ADVENT BORI", "SD GMIH PEDIWANG", "SD INPRES PEDIWANG", "SD INPRES TUNUO", "SD INPRES WATETO",
-                    "SD NEGERI BORI", "SD NEGERI DOWONGIMAITI", "SD NEGERI GULO", "SD NEGERI WARUDU"
+                    "SD ADVENT BORI", "SD GMIH PEDIWANG", "SD INPRES PEDIWANG", "SD INPRES TUNUO", "SD INPRES WATETO", "SD NEGERI BORI", 
+                    "SD NEGERI DOWONGIMAITI", "SD NEGERI GULO", "SD NEGERI WARUDU"
                 ],
                 "SD Gugus 17 Kao": [
-                    "SD ALKHAIRAAT KAO", "SD GMIH SOASANGAJI DIM DIM", "SD INPRES KAO", "SD INPRES KUSU", "SD INPRES SASUR",
+                    "SD ALKHAIRAAT KAO", "SD GMIH SOASANGAJI DIM DIM", "SD INPRES KAO", "SD INPRES KUSU", "SD INPRES SASUR", 
                     "SD NEGERI KAO", "SD NEGERI KUSU LOVRA", "SD NEGERI WARINGIN LELEWI"
                 ],
-                "SD gugus 18 Kao": [
+                "SD Gugus 18 Kao": [
                     "SD GMIH BIANG", "SD INPRES BIANG A", "SD INPRES BIANG B", "SD INPRES KUKUMUTUK", "SD INPRES POPON", "SD NEGERI PATANG"
                 ],
                 "SD Gugus 19 Kao Barat": [
-                    "SD INPRES TOLIWANG A", "SD INPRES TOLIWANG B", "SD INPRES TOLIWANG C", "SD INPRES TOLIWANG E",
-                    "SD NEGERI NGOALI", "SD NEGERI TOLIWANG"
+                    "SD INPRES TOLIWANG A", "SD INPRES TOLIWANG B", "SD INPRES TOLIWANG C", "SD INPRES TOLIWANG E", "SD NEGERI NGOALI", 
+                    "SD NEGERI TOLIWANG"
                 ],
                 "SD Gugus 20 Kao Barat": [
                     "SD GMIH LELESENG", "SD INPRES LELESENG", "SD INPRES TOLIWANG D", "SD NEGERI TOLABIT", "SD NEGERI TUGUIS PARSEBA"
                 ],
                 "SD Gugus 21 Kao Barat": [
-                    "SD GMIH KAI", "SD GMIH SOAMAETEK", "SD NEGERI BAILENGIT", "SD NEGERI KAI", "SD NEGERI PITAGO",
-                    "SD NEGERI TAKIMO", "SD NEGERI TOBOULAMO"
+                    "SD GMIH KAI", "SD GMIH SOAMAETEK", "SD NEGERI BAILENGIT", "SD NEGERI KAI", "SD NEGERI PITAGO", "SD NEGERI TAKIMO", 
+                    "SD NEGERI TOBOULAMO"
                 ],
                 "SD Gugus 22 Malifut": [
-                    "SD INPRES BALISOSANG", "SD INPRES NGAIMADODERA", "SD INPRES SAMSUMA", "SD INPRES SENTER MALIFUT",
-                    "SD INPRES TAHANE", "SD NEGERI BERINGIN GOSOWONG", "SD NEGERI SOSOL"
+                    "SD INPRES BALISOSANG", "SD INPRES NGAIMADODERA", "SD INPRES SAMSUMA", "SD INPRES SENTER MALIFUT", "SD INPRES TAHANE", 
+                    "SD NEGERI BERINGIN GOSOWONG", "SD NEGERI SOSOL"
                 ],
                 "SD Gugus 23 Malifut": [
-                    "SD INPRES 1 NGOFAKIAHA", "SD INPRES MAILOA", "SD INPRES PELERI", "SD INPRES TAFASOHO", "SD INPRES TAGONO",
+                    "SD INPRES 1 NGOFAKIAHA", "SD INPRES MAILOA", "SD INPRES PELERI", "SD INPRES TAFASOHO", "SD INPRES TAGONO", 
                     "SD INPRES TOMABARU BOBAWA", "SD NEGERI GAYOK", "SD NEGERI WANGEOTAK"
                 ],
                 "SD Gugus 24 Kao Teluk": [
-                    "SD INPRES 3 NGOFAKIAHA", "SD INPRES AKESAHU", "SD INPRES DUM DUM SAMAT", "SD INPRES LAINOMA",
-                    "SD INPRES TAKOME GAMLAMO", "SD NEGERI AKELAMO CIBOK", "SD NEGERI BOBANEIGO", "SD NEGERI DUM-DUM PANTAI",
-                    "SD NEGERI KOBOK PAPAKA", "SDN INPRES DUM DUM GOTA"
+                    "SD INPRES 3 NGOFAKIAHA", "SD INPRES AKESAHU", "SD INPRES DUM DUM SAMAT", "SD INPRES LAINOMA", "SD INPRES TAKOME GAMLAMO", 
+                    "SD NEGERI AKELAMO CIBOK", "SD NEGERI BOBANEIGO", "SD NEGERI DUM-DUM PANTAI", "SD NEGERI KOBOK PAPAKA", "SDN INPRES DUM DUM GOTA"
                 ],
                 "SD Gugus 25 Loloda Utara": [
-                    "SD GMIH ASIMIRO", "SD GMIH DORUME", "SD GMIH KAILUPA", "SD INPRES APULEA", "SD INPRES DOITIA",
-                    "SD INPRES MAMOJIU", "SD INPRES NGAJAM", "SD ISLAMIYAH ALFI ALFIYAH WORIMOI"
+                    "SD GMIH ASIMIRO", "SD GMIH DORUME", "SD GMIH KAILUPA", "SD INPRES APULEA", "SD INPRES DOITIA", "SD INPRES MAMOJIU", 
+                    "SD INPRES NGAJAM", "SD ISLAMIYAH ALFI ALFIYAH WORIMOI"
                 ],
                 "SD Gugus 26 Loloda Utara": [
-                    "SD GMIH IGO", "SD GMIH KAPA KAPA", "SD GMIH POSI POSI", "SD GMIH SUPU", "SD INPRES POSI-POSI",
-                    "SD INPRES TATE", "SD INPRES TERU TERU", "SD ISLAMIYAH 2 GALAO", "SD NEGERI PACAO", "SD NEGERI GISI"
+                    "SD GMIH IGO", "SD GMIH KAPA KAPA", "SD GMIH POSI POSI", "SD GMIH SUPU", "SD INPRES POSI-POSI", "SD INPRES TATE", 
+                    "SD INPRES TERU TERU", "SD ISLAMIYAH 2 GALAO", "SD NEGERI PACAO", "SD NEGERI GISI"
                 ],
-                "SD Gugus 27 Loloda Utara": [ // Renamed from Loloda Kepulauan based on user prompt structure
+                "SD Gugus 27 Loloda Utara": [ /* Accomodating text request despite data mapping to Kepulauan */
                     "SD GMIH DOWONGGILA", "SD INPRES CERA", "SD NEGERI DAMA", "SD NEGERI SALUBE", "SD NEGERI TUAKARA"
                 ],
-                "SD Gugus 28 Loloda Utara": [ // Renamed from Loloda Kepulauan based on user prompt structure
+                "SD Gugus 28 Loloda Utara": [
                     "SD INPRES JIKOLAMO", "SD NEGERI DAGASULI", "SD NEGERI DEDETA", "SD NEGERI FITAKO", "SD NEGERI TOBO TOBO"
                 ]
             },
+
             "Klaster SMP": {
                 "SMP Klaster Tobelo 1": [
-                    "SMP NEGERI SATU ATAP KUSURI", "SMP NEGERI SATU ATAP METI", "SMP TUNAS BANGSA HORIMOI",
-                    "SMP NEGERI 11 HALMAHERA UTARA", "SMP NEGERI 23 HALMAHERA UTARA", "SMP NEGERI 7 HALMAHERA UTARA"
+                    "SMP NEGERI SATU ATAP KUSURI", "SMP NEGERI SATU ATAP METI", "SMP TUNAS BANGSA HORIMOI", "SMP NEGERI 11 HALMAHERA UTARA", 
+                    "SMP NEGERI 23 HALMAHERA UTARA", "SMP NEGERI 7 HALMAHERA UTARA"
                 ],
                 "SMP Klaster Tobelo 2": [
-                    "SMP BINA KARYA TOBELO", "SMP NEGERI 6 HALMAHERA UTARA", "SMP HEIN NAMOTEMO", "SMP ISLAM TOBELO",
-                    "SMP MANGGALA PERKASA", "SMP MUHAMMADYAH TOBELO", "SMP NEGERI 6 SATU ATAP KAKARA", "SMP NUSANTARA TOBELO"
+                    "SMP BINA KARYA TOBELO", "SMP NEGERI 6 HALMAHERA UTARA", "SMP HEIN NAMOTEMO", "SMP ISLAM TOBELO", "SMP MANGGALA PERKASA", 
+                    "SMP MUHAMMADYAH TOBELO", "SMP NEGERI 6 SATU ATAP KAKARA", "SMP NUSANTARA TOBELO"
                 ],
                 "SMP Klaster Tobelo 3": [
-                    "SMP ADVENT TOBELO", "SMP ALEGAN TOBELO", "SMP BINTANG LAUT TOBELO", "SMP GOTONG ROYONG TOBELO",
-                    "SMP KRISTEN TOBELO", "SMP MAREN TOBELO", "SMP NEGERI 1 HALMAHERA UTARA", "SMP RAHAI", "SMP NEGERI 29 HALMAHERA UTARA"
+                    "SMP ADVENT TOBELO", "SMP ALEGAN TOBELO", "SMP BINTANG LAUT TOBELO", "SMP GOTONG ROYONG TOBELO", "SMP KRISTEN TOBELO", 
+                    "SMP MAREN TOBELO", "SMP NEGERI 1 HALMAHERA UTARA", "SMP RAHAI", "SMP NEGERI 29 HALMAHERA UTARA"
                 ],
                 "SMP Klaster Tobelo 4": [
-                    "SMPS LABORATORIUM UNIERA", "SMP ALKHAIRAAT TOBELO", "SMP GLOBAL PASIFIC", "SMP ISLAM TERPADU ALKHAIRAAT LUARI",
+                    "SMPS LABORATORIUM UNIERA", "SMP ALKHAIRAAT TOBELO", "SMP GLOBAL PASIFIC", "SMP ISLAM TERPADU ALKHAIRAAT LUARI", 
                     "SMP NEGERI 13 HALMAHERA UTARA", "SMP NEGERI 17 HALMAHERA UTARA", "SMP NEGERI 5 SATU ATAP TOLONUO"
                 ],
                 "SMP Klaster Galela": [
-                    "SMP HAWA DJURUMUDI HARUM", "SMP NEGERI 5 HALMAHERA UTARA", "SMP MUHAMMADIYAH GALELA", "SMP NASIONAL GALELA SELATAN",
-                    "SMP NEGERI 2 HALMAHERA UTARA", "SMP BINA TALENTA ROKO", "SMP KRISTEN GALELA", "SMP NEGERI 15 HALMAHERA UTARA",
+                    "SMP HAWA DJURUMUDI HARUM", "SMP NEGERI 5 HALMAHERA UTARA", "SMP MUHAMMADIYAH GALELA", "SMP NASIONAL GALELA SELATAN", 
+                    "SMP NEGERI 2 HALMAHERA UTARA", "SMP BINA TALENTA ROKO", "SMP KRISTEN GALELA", "SMP NEGERI 15 HALMAHERA UTARA", 
                     "SMP CINTA DAMAI", "SMP NEGERI 14 HALMAHERA UTARA", "SMP NEGERI 5 SATU ATAP LALONGA"
                 ],
                 "SMP Klaster Loloda Utara": [
-                    "SMP AL BASYIRIAH GALAO", "SMP AL BASYIRIAH TATE", "SMP ALIMAN GALAO GISI", "SMP KRISTEN DORUME",
-                    "SMP NEGERI 18 HALMAHERA UTARA", "SMP NEGERI 19 HALMAHERA UTARA", "SMP NEGERI 24 HALMAHERA UTARA", "SMP NEGERI 8 HALMAHERA UTARA"
+                    "SMP AL BASYIRIAH GALAO", "SMP AL BASYIRIAH TATE", "SMP ALIMAN GALAO GISI", "SMP KRISTEN DORUME", "SMP NEGERI 18 HALMAHERA UTARA", 
+                    "SMP NEGERI 19 HALMAHERA UTARA", "SMP NEGERI 24 HALMAHERA UTARA", "SMP NEGERI 8 HALMAHERA UTARA"
                 ],
                 "SMP Klaster Loloda Kepulauan": [
-                    "SMP BINA TALENTA DOWONGGILA", "SMP ISLAM DAGASULI", "SMP NEGERI 10 HALMAHERA UTARA", "SMP NEGERI 25 HALMAHERA UTARA",
+                    "SMP BINA TALENTA DOWONGGILA", "SMP ISLAM DAGASULI", "SMP NEGERI 10 HALMAHERA UTARA", "SMP NEGERI 25 HALMAHERA UTARA", 
                     "SMP NEGERI 26 HALMAHERA UTARA", "SMP NEGERI SATAP TOBO TOBO", "SMP NEGERI SATU ATAP CERA", "SMP NEGERI SATU ATAP FITAKO"
                 ],
                 "SMP Klaster Kao Barat": [
-                    "SMP KRISTEN SOAMAETEK", "SMP NEGERI 22 HALMAHERA UTARA", "SMP NEGERI 4 SATU ATAP TOLIWANG",
-                    "SMP NEGERI 9 HALMAHERA UTARA", "SMP NEGERI SATU ATAP NGOALI", "SMP NEGERI SATU ATAP TOBOULAMO"
+                    "SMP KRISTEN SOAMAETEK", "SMP NEGERI 22 HALMAHERA UTARA", "SMP NEGERI 4 SATU ATAP TOLIWANG", "SMP NEGERI 9 HALMAHERA UTARA", 
+                    "SMP NEGERI SATU ATAP NGOALI", "SMP NEGERI SATU ATAP TOBOULAMO"
                 ],
                 "SMP Klaster Kao & Kao Utara": [
-                    "SMP MUH. WARINGIN LAMO", "SMP NEGERI 20 HALMAHERA UTARA", "SMP NEGERI 3 HALMAHERA UTARA", "SMP ADVENT BORI",
+                    "SMP MUH. WARINGIN LAMO", "SMP NEGERI 20 HALMAHERA UTARA", "SMP NEGERI 3 HALMAHERA UTARA", "SMP ADVENT BORI", 
                     "SMP KRISTEN GEORGE RORIWO", "SMP KRISTEN PEDIWANG", "SMP NEGERI 16 HALMAHERA UTARA", "SMP NEGERI SATU ATAP BOBALE"
                 ],
                 "SMP Klaster Kao Teluk & Malifut": [
-                    "SMP BPD NGEBA PASIR PUTIH", "SMP NEGERI 12 HALMAHERA UTARA", "SMP NEGERI SATU ATAP BOBANEIGO",
-                    "SMP NEGERI 27 HALMAHERA UTARA", "SMP NEGERI 4 HALMAHERA UTARA", "SMP NEGERI 28 HALMAHERA UTARA"
+                    "SMP BPD NGEBA PASIR PUTIH", "SMP NEGERI 12 HALMAHERA UTARA", "SMP NEGERI SATU ATAP BOBANEIGO", "SMP NEGERI 27 HALMAHERA UTARA", 
+                    "SMP NEGERI 4 HALMAHERA UTARA", "SMP NEGERI 28 HALMAHERA UTARA"
                 ]
             },
+
             "Antar Sekolah SD": {
                 "Kelompok 01 SD": ["SD INPRES WARI", "SD NEGERI 3 TOBELO", "SD ADVENT PUNE", "SD NEGERI 5 TOBELO", "SD INPRES BERTINGKAT"],
                 "Kelompok 02 SD": ["SD GMIH 2 TOBELO", "SD NASKAT B. T. 2 TOBELO", "SD AN NUR GURA", "SD NASKAT B. T. 1 TOBELO", "SD NASKAT B. T. 3 TOBELO"],
@@ -584,252 +493,187 @@
             }
         };
 
-        // Flatten data for reverse lookup (School -> Kombel)
-        let schoolToKombelMap = {};
-        for (const jenis in dataKombel) {
-            for (const kombel in dataKombel[jenis]) {
-                dataKombel[jenis][kombel].forEach(sekolah => {
-                    // Create entry if not exists, allows handling if a school is in multiple kombels
-                    if (!schoolToKombelMap[sekolah.toUpperCase()]) {
-                        schoolToKombelMap[sekolah.toUpperCase()] = [];
-                    }
-                    schoolToKombelMap[sekolah.toUpperCase()].push({ jenis, kombel, namaAsli: sekolah });
-                });
-            }
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate Jenis Kombel dropdown on load
+            const jenisKombelSelect = document.getElementById('jenisKombelSelect');
+            Object.keys(kombelData).forEach(jenis => {
+                const option = document.createElement('option');
+                option.value = jenis;
+                option.textContent = jenis;
+                jenisKombelSelect.appendChild(option);
+            });
 
-        
+            // Enter key trigger for search
+            document.getElementById('schoolInput').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    searchBySchool();
+                }
+            });
+        });
+
         // Tab Switching Logic
         function switchTab(tabId) {
-            const btnKombelToSekolah = document.getElementById('tab-kombel-to-sekolah');
-            const btnSekolahToKombel = document.getElementById('tab-sekolah-to-kombel');
-            const secKombelToSekolah = document.getElementById('section-kombel-to-sekolah');
-            const secSekolahToKombel = document.getElementById('section-sekolah-to-kombel');
+            // Reset tabs
+            document.getElementById('tab-searchSchool').classList.remove('tab-active');
+            document.getElementById('tab-searchSchool').classList.add('text-gray-500');
+            document.getElementById('tab-searchKombel').classList.remove('tab-active');
+            document.getElementById('tab-searchKombel').classList.add('text-gray-500');
+            
+            document.getElementById('view-searchSchool').classList.add('hidden');
+            document.getElementById('view-searchKombel').classList.add('hidden');
 
-            if (tabId === 'kombel-to-sekolah') {
-                // Update Buttons
-                btnKombelToSekolah.classList.remove('text-gray-600', 'hover:text-gray-900');
-                btnKombelToSekolah.classList.add('bg-white', 'text-primary-700', 'shadow', 'shadow-gray-200');
-                
-                btnSekolahToKombel.classList.add('text-gray-600', 'hover:text-gray-900');
-                btnSekolahToKombel.classList.remove('bg-white', 'text-primary-700', 'shadow', 'shadow-gray-200');
-
-                // Update Sections
-                secKombelToSekolah.classList.remove('hidden');
-                secSekolahToKombel.classList.add('hidden');
-            } else {
-                // Update Buttons
-                btnSekolahToKombel.classList.remove('text-gray-600', 'hover:text-gray-900');
-                btnSekolahToKombel.classList.add('bg-white', 'text-primary-700', 'shadow', 'shadow-gray-200');
-                
-                btnKombelToSekolah.classList.add('text-gray-600', 'hover:text-gray-900');
-                btnKombelToSekolah.classList.remove('bg-white', 'text-primary-700', 'shadow', 'shadow-gray-200');
-
-                // Update Sections
-                secSekolahToKombel.classList.remove('hidden');
-                secKombelToSekolah.classList.add('hidden');
-            }
+            // Activate chosen tab
+            document.getElementById(`tab-${tabId}`).classList.add('tab-active');
+            document.getElementById(`tab-${tabId}`).classList.remove('text-gray-500');
+            
+            const view = document.getElementById(`view-${tabId}`);
+            view.classList.remove('hidden');
+            view.classList.add('fade-in');
         }
 
-        // Logic for Kombel -> Sekolah
-        function updateNamaKombelOptions() {
-            const jenisSelect = document.getElementById('jenisKombel');
-            const namaSelect = document.getElementById('namaKombel');
-            const jenisVal = jenisSelect.value;
+        // Search logic for School -> Kombel
+        function searchBySchool() {
+            const input = document.getElementById('schoolInput').value.trim().toLowerCase();
+            const resultDiv = document.getElementById('schoolSearchResult');
             
-            // Reset state
-            document.getElementById('hasilSekolahContainer').classList.add('hidden');
-            document.getElementById('emptyStateSekolah').classList.remove('hidden');
-            
-            if (jenisVal && dataKombel[jenisVal]) {
-                namaSelect.innerHTML = '<option value="">-- Pilih Nama Kombel --</option>';
-                const kombelNames = Object.keys(dataKombel[jenisVal]);
+            if (!input) {
+                resultDiv.innerHTML = `<div class="p-4 bg-yellow-50 text-yellow-700 border border-yellow-200 rounded-xl"><i class="fas fa-exclamation-triangle mr-2"></i>Silakan masukkan nama sekolah terlebih dahulu.</div>`;
+                resultDiv.classList.remove('hidden');
+                return;
+            }
+
+            let foundKombels = [];
+
+            // Iterate through all data to find matching schools
+            for (const [jenisKombel, kombels] of Object.entries(kombelData)) {
+                for (const [namaKombel, sekolahList] of Object.entries(kombels)) {
+                    const matches = sekolahList.filter(sekolah => sekolah.toLowerCase().includes(input));
+                    if (matches.length > 0) {
+                        foundKombels.push({
+                            jenis: jenisKombel,
+                            nama: namaKombel,
+                            semuaSekolah: sekolahList,
+                            sekolahDitemukan: matches
+                        });
+                    }
+                }
+            }
+
+            // Render Results
+            if (foundKombels.length === 0) {
+                resultDiv.innerHTML = `<div class="p-4 bg-red-50 text-red-700 border border-red-200 rounded-xl"><i class="fas fa-times-circle mr-2"></i>Sekolah dengan nama "<b>${document.getElementById('schoolInput').value}</b>" tidak ditemukan.</div>`;
+            } else {
+                let html = `<p class="mb-4 text-sm text-gray-600 font-medium">Ditemukan dalam ${foundKombels.length} Kombel:</p>`;
                 
-                kombelNames.forEach(kombel => {
+                foundKombels.forEach(kombel => {
+                    html += `
+                        <div class="mb-6 bg-white border border-primary-200 rounded-xl overflow-hidden shadow-sm fade-in">
+                            <div class="bg-primary-50 px-5 py-4 border-b border-primary-100 flex items-center justify-between">
+                                <div>
+                                    <span class="text-xs font-bold text-primary-600 uppercase tracking-wider">${kombel.jenis}</span>
+                                    <h3 class="text-lg font-bold text-gray-900 mt-1">${kombel.nama}</h3>
+                                </div>
+                                <div class="bg-white p-2 rounded-full shadow-sm">
+                                    <i class="fas fa-users text-primary-500"></i>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-3 border-b pb-2"><i class="fas fa-list-ul mr-2 text-gray-400"></i>Daftar Sekolah dalam Kombel ini:</h4>
+                                <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                    `;
+                    
+                    kombel.semuaSekolah.forEach(sekolah => {
+                        const isMatch = kombel.sekolahDitemukan.includes(sekolah);
+                        html += `
+                            <li class="flex items-start text-sm ${isMatch ? 'text-primary-700 font-semibold bg-primary-50 p-1 rounded' : 'text-gray-600'}">
+                                <i class="fas ${isMatch ? 'fa-check-circle text-primary-500 mt-0.5' : 'fa-circle text-[8px] text-gray-300 mt-1.5'} mr-2 min-w-[16px]"></i>
+                                ${sekolah}
+                            </li>
+                        `;
+                    });
+
+                    html += `
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                });
+                resultDiv.innerHTML = html;
+            }
+            resultDiv.classList.remove('hidden');
+            resultDiv.classList.add('fade-in');
+        }
+
+        // Dropdown logic for Kombel -> School
+        function updateKombelDropdown() {
+            const jenisSelect = document.getElementById('jenisKombelSelect');
+            const namaSelect = document.getElementById('namaKombelSelect');
+            const resultDiv = document.getElementById('kombelFilterResult');
+            
+            const selectedJenis = jenisSelect.value;
+            resultDiv.classList.add('hidden'); // hide prev results
+
+            // Clear options
+            namaSelect.innerHTML = '<option value="" disabled selected>-- Pilih Nama Kombel --</option>';
+            
+            if (selectedJenis && kombelData[selectedJenis]) {
+                const kombelNames = Object.keys(kombelData[selectedJenis]);
+                kombelNames.forEach(nama => {
                     const option = document.createElement('option');
-                    option.value = kombel;
-                    option.textContent = kombel;
+                    option.value = nama;
+                    option.textContent = nama;
                     namaSelect.appendChild(option);
                 });
-                
                 namaSelect.disabled = false;
-                namaSelect.classList.remove('disabled:bg-gray-200', 'disabled:text-gray-400');
+                namaSelect.classList.remove('bg-gray-50');
                 namaSelect.classList.add('bg-white');
             } else {
-                namaSelect.innerHTML = '<option value="">-- Pilih Jenis Kombel Terlebih Dahulu --</option>';
                 namaSelect.disabled = true;
-                namaSelect.classList.add('disabled:bg-gray-200', 'disabled:text-gray-400');
+                namaSelect.classList.add('bg-gray-50');
                 namaSelect.classList.remove('bg-white');
             }
         }
 
-        function tampilkanSekolah() {
-            const jenisVal = document.getElementById('jenisKombel').value;
-            const kombelVal = document.getElementById('namaKombel').value;
-            const hasilContainer = document.getElementById('hasilSekolahContainer');
-            const emptyState = document.getElementById('emptyStateSekolah');
-            const daftarList = document.getElementById('daftarSekolah');
-            
-            if (jenisVal && kombelVal && dataKombel[jenisVal][kombelVal]) {
-                const listSekolah = dataKombel[jenisVal][kombelVal];
-                
-                // Update Headers
-                document.getElementById('judulHasilKombel').textContent = kombelVal;
-                document.getElementById('subjudulJenisKombel').textContent = jenisVal;
-                document.getElementById('totalSekolahBadge').textContent = `${listSekolah.length} Sekolah`;
-                
-                // Populate List
-                daftarList.innerHTML = '';
-                listSekolah.forEach((sekolah, index) => {
-                    const li = document.createElement('li');
-                    li.className = 'px-4 py-3 flex items-start hover:bg-gray-50 transition-colors';
-                    
-                    // Add an icon based on type for visual flair
-                    let iconClass = 'fa-school';
-                    if(jenisVal.includes('TK') || jenisVal.includes('PAUD')) iconClass = 'fa-shapes';
-                    else if(jenisVal.includes('SD')) iconClass = 'fa-book';
-                    else if(jenisVal.includes('SMP')) iconClass = 'fa-graduation-cap';
+        function showKombelDetails() {
+            const jenis = document.getElementById('jenisKombelSelect').value;
+            const nama = document.getElementById('namaKombelSelect').value;
+            const resultDiv = document.getElementById('kombelFilterResult');
 
-                    li.innerHTML = `
-                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 text-primary-600 flex items-center justify-center mr-3 mt-0.5 text-xs font-semibold">
-                            ${index + 1}
-                        </span>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-800">${sekolah}</p>
-                            <p class="text-xs text-gray-500 mt-0.5"><i class="fas ${iconClass} mr-1"></i> Halmahera Utara</p>
-                        </div>
-                    `;
-                    daftarList.appendChild(li);
-                });
+            if (jenis && nama && kombelData[jenis][nama]) {
+                const sekolahList = kombelData[jenis][nama];
                 
-                // Show container
-                emptyState.classList.add('hidden');
-                hasilContainer.classList.remove('hidden');
-            } else {
-                emptyState.classList.remove('hidden');
-                hasilContainer.classList.add('hidden');
-            }
-        }
-
-        
-        // Debounce setup for search to not over-process on every keystroke
-        let searchTimeout;
-        
-        function cariSekolah() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                const input = document.getElementById('searchInputSekolah');
-                const clearBtn = document.getElementById('clearSearchBtn');
-                const query = input.value.trim().toUpperCase();
-                
-                const container = document.getElementById('hasilKombelContainer');
-                const emptyState = document.getElementById('emptyStateKombel');
-                const notFoundState = document.getElementById('notFoundStateKombel');
-                
-                // Toggle clear button
-                if (query.length > 0) {
-                    clearBtn.classList.remove('hidden');
-                } else {
-                    clearBtn.classList.add('hidden');
-                }
-
-                if (query.length < 3) {
-                    // Hide results if query is too short
-                    container.innerHTML = '';
-                    container.classList.add('hidden');
-                    notFoundState.classList.add('hidden');
-                    emptyState.classList.remove('hidden');
-                    return;
-                }
-
-                emptyState.classList.add('hidden');
-                
-                // Search logic - simple partial match
-                let matches = [];
-                for (const schoolName in schoolToKombelMap) {
-                    if (schoolName.includes(query)) {
-                        matches.push({
-                            searchKey: schoolName,
-                            data: schoolToKombelMap[schoolName]
-                        });
-                    }
-                }
-
-                if (matches.length > 0) {
-                    notFoundState.classList.add('hidden');
-                    renderHasilSekolahToKombel(matches);
-                    container.classList.remove('hidden');
-                } else {
-                    container.innerHTML = '';
-                    container.classList.add('hidden');
-                    notFoundState.classList.remove('hidden');
-                }
-            }, 300); // 300ms debounce
-        }
-        
-        function renderHasilSekolahToKombel(matches) {
-            const container = document.getElementById('hasilKombelContainer');
-            container.innerHTML = ''; // Clear previous
-            
-            const resultHeader = document.createElement('div');
-            resultHeader.className = 'mb-4 flex items-center justify-between text-sm';
-            resultHeader.innerHTML = `
-                <span class="text-gray-500">Ditemukan <span class="font-bold text-gray-800">${matches.length}</span> sekolah yang cocok</span>
-            `;
-            container.appendChild(resultHeader);
-            
-            const grid = document.createElement('div');
-            grid.className = 'grid gap-4';
-            
-            matches.forEach(match => {
-                // Multiple kombels possible per school (though rare in this dataset, structure allows it)
-                match.data.forEach(info => {
-                    const card = document.createElement('div');
-                    card.className = 'bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group';
-                    
-                    // Decorator strip
-                    let colorClass = 'bg-blue-500';
-                    let badgeClass = 'bg-blue-100 text-blue-800 border-blue-200';
-                    if(info.jenis.includes('Gugus TK') || info.jenis.includes('Gugus PAUD')) {
-                        colorClass = 'bg-pink-500'; badgeClass = 'bg-pink-100 text-pink-800 border-pink-200';
-                    } else if(info.jenis.includes('SD')) {
-                        colorClass = 'bg-red-500'; badgeClass = 'bg-red-100 text-red-800 border-red-200';
-                    } else if(info.jenis.includes('SMP')) {
-                        colorClass = 'bg-indigo-500'; badgeClass = 'bg-indigo-100 text-indigo-800 border-indigo-200';
-                    }
-
-                    card.innerHTML = `
-                        <div class="absolute left-0 top-0 bottom-0 w-1 ${colorClass}"></div>
-                        <div class="pl-2">
-                            <h4 class="text-lg font-bold text-gray-800 mb-2">${info.namaAsli}</h4>
-                            <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
-                                <div class="grid grid-cols-2 gap-2 text-sm">
-                                    <div>
-                                        <p class="text-gray-500 text-xs uppercase font-semibold">Nama Kombel</p>
-                                        <p class="font-medium text-gray-900">${info.kombel}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500 text-xs uppercase font-semibold">Jenis Kombel</p>
-                                        <span class="inline-flex mt-1 items-center px-2 py-0.5 rounded text-xs font-medium border ${badgeClass}">
-                                            ${info.jenis}
-                                        </span>
-                                    </div>
-                                </div>
+                let html = `
+                    <div class="bg-white border border-teal-200 rounded-xl overflow-hidden shadow-md fade-in">
+                        <div class="bg-teal-50 px-5 py-4 border-b border-teal-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">${jenis}</span>
+                                <h3 class="text-xl font-bold text-gray-900 mt-1">${nama}</h3>
+                            </div>
+                            <div class="bg-white p-3 rounded-full shadow-sm text-teal-500">
+                                <span class="font-bold text-lg">${sekolahList.length}</span> <span class="text-xs">Sekolah</span>
                             </div>
                         </div>
-                    `;
-                    grid.appendChild(card);
-                });
-            });
-            
-            container.appendChild(grid);
-        }
+                        <div class="p-5">
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                `;
 
-        function clearSearch() {
-            const input = document.getElementById('searchInputSekolah');
-            input.value = '';
-            input.focus();
-            cariSekolah(); // Trigger update which will show empty state
+                sekolahList.forEach(sekolah => {
+                    html += `
+                        <li class="bg-gray-50 border border-gray-100 rounded-lg p-3 text-sm text-gray-700 font-medium hover:bg-teal-50 hover:border-teal-200 transition-colors flex items-center">
+                            <i class="fas fa-building text-gray-400 mr-2 text-xs"></i> ${sekolah}
+                        </li>
+                    `;
+                });
+
+                html += `
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                
+                resultDiv.innerHTML = html;
+                resultDiv.classList.remove('hidden');
+            }
         }
     </script>
 </body>
