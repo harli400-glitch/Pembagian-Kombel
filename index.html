@@ -100,12 +100,11 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fas fa-school text-gray-400"></i>
                         </div>
-                        <input type="text" id="schoolInput" class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all sm:text-sm" placeholder="Contoh: TK ABADI GAMSUNGI atau SD INPRES...">
-                        <button onclick="searchBySchool()" class="absolute inset-y-1 right-1 px-4 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors">
-                            Cari
-                        </button>
+                        <input type="text" id="schoolInput" autocomplete="off" class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all sm:text-sm" placeholder="Contoh: TK ABADI GAMSUNGI atau SD INPRES...">
+                        <!-- Dropdown Rekomendasi Autocomplete -->
+                        <ul id="autocomplete-list" class="absolute z-10 w-full bg-white border border-gray-200 mt-1 rounded-xl shadow-lg max-h-60 overflow-y-auto hidden"></ul>
                     </div>
-                    <p class="mt-2 text-xs text-gray-500"><i class="fas fa-info-circle mr-1"></i>Ketik nama sekolah lalu klik Cari atau tekan Enter.</p>
+                    <p class="mt-2 text-xs text-gray-500"><i class="fas fa-info-circle mr-1"></i>Ketik nama sekolah lalu pilih dari rekomendasi atau tekan Enter.</p>
                 </div>
                 
                 <div id="schoolSearchResult" class="hidden mt-6">
@@ -493,6 +492,8 @@
             }
         };
 
+        let allSchoolsList = [];
+
         document.addEventListener('DOMContentLoaded', () => {
             // Populate Jenis Kombel dropdown on load
             const jenisKombelSelect = document.getElementById('jenisKombelSelect');
@@ -503,9 +504,67 @@
                 jenisKombelSelect.appendChild(option);
             });
 
+            // Mengekstrak semua nama sekolah unik untuk autocomplete
+            for (const jenis in kombelData) {
+                for (const nama in kombelData[jenis]) {
+                    kombelData[jenis][nama].forEach(sekolah => {
+                        if (!allSchoolsList.includes(sekolah)) {
+                            allSchoolsList.push(sekolah);
+                        }
+                    });
+                }
+            }
+
+            const schoolInput = document.getElementById('schoolInput');
+            const autocompleteList = document.getElementById('autocomplete-list');
+
+            schoolInput.addEventListener('input', function() {
+                const val = this.value;
+                autocompleteList.innerHTML = '';
+                
+                if (!val) {
+                    autocompleteList.classList.add('hidden');
+                    return;
+                }
+
+                // Filter sekolah berdasarkan input
+                const matches = allSchoolsList.filter(s => s.toLowerCase().includes(val.toLowerCase()));
+                
+                if (matches.length > 0) {
+                    autocompleteList.classList.remove('hidden');
+                    matches.forEach(match => {
+                        const li = document.createElement('li');
+                        li.className = 'px-4 py-3 cursor-pointer hover:bg-primary-50 text-sm text-gray-700 border-b border-gray-100 last:border-b-0 transition-colors';
+                        
+                        // Highlight teks yang cocok dengan input
+                        const regex = new RegExp(`(${val})`, "gi");
+                        const highlighted = match.replace(regex, "<span class='font-bold text-primary-600'>$1</span>");
+                        
+                        li.innerHTML = highlighted;
+                        
+                        // Event saat rekomendasi dipilih
+                        li.addEventListener('click', function() {
+                            schoolInput.value = match;
+                            autocompleteList.classList.add('hidden');
+                            searchBySchool(); // Otomatis mencari setelah dipilih
+                        });
+                        autocompleteList.appendChild(li);
+                    });
+                } else {
+                    autocompleteList.classList.add('hidden');
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target !== schoolInput && e.target !== autocompleteList) {
+                    autocompleteList.classList.add('hidden');
+                }
+            });
+
             // Enter key trigger for search
-            document.getElementById('schoolInput').addEventListener('keypress', function (e) {
+            schoolInput.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
+                    autocompleteList.classList.add('hidden');
                     searchBySchool();
                 }
             });
@@ -568,26 +627,32 @@
                 foundKombels.forEach(kombel => {
                     html += `
                         <div class="mb-6 bg-white border border-primary-200 rounded-xl overflow-hidden shadow-sm fade-in">
-                            <div class="bg-primary-50 px-5 py-4 border-b border-primary-100 flex items-center justify-between">
-                                <div>
-                                    <span class="text-xs font-bold text-primary-600 uppercase tracking-wider">${kombel.jenis}</span>
-                                    <h3 class="text-lg font-bold text-gray-900 mt-1">${kombel.nama}</h3>
+                            <div class="bg-primary-50 px-5 py-4 border-b border-primary-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary-100 text-primary-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider border border-primary-200">Jenis Kombel</span>
+                                        <span class="text-sm font-semibold text-gray-700">${kombel.jenis}</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider border border-blue-200 mt-1">Nama Kombel</span>
+                                        <h3 class="text-lg md:text-xl font-bold text-gray-900 leading-tight">${kombel.nama}</h3>
+                                    </div>
                                 </div>
-                                <div class="bg-white p-2 rounded-full shadow-sm">
+                                <div class="bg-white p-2 rounded-full shadow-sm hidden md:block">
                                     <i class="fas fa-users text-primary-500"></i>
                                 </div>
                             </div>
                             <div class="p-5">
-                                <h4 class="text-sm font-semibold text-gray-700 mb-3 border-b pb-2"><i class="fas fa-list-ul mr-2 text-gray-400"></i>Daftar Sekolah dalam Kombel ini:</h4>
+                                <h4 class="text-sm font-semibold text-gray-700 mb-3 border-b pb-2"><i class="fas fa-list-ul mr-2 text-gray-400"></i>Daftar Seluruh Sekolah dalam Kombel ini:</h4>
                                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
                     `;
                     
                     kombel.semuaSekolah.forEach(sekolah => {
                         const isMatch = kombel.sekolahDitemukan.includes(sekolah);
                         html += `
-                            <li class="flex items-start text-sm ${isMatch ? 'text-primary-700 font-semibold bg-primary-50 p-1 rounded' : 'text-gray-600'}">
-                                <i class="fas ${isMatch ? 'fa-check-circle text-primary-500 mt-0.5' : 'fa-circle text-[8px] text-gray-300 mt-1.5'} mr-2 min-w-[16px]"></i>
-                                ${sekolah}
+                            <li class="flex items-start text-sm ${isMatch ? 'text-primary-800 font-bold bg-primary-100/50 p-2 rounded border border-primary-100' : 'text-gray-600 p-2'}">
+                                <i class="fas ${isMatch ? 'fa-check-circle text-primary-600 mt-0.5' : 'fa-circle text-[8px] text-gray-300 mt-1.5'} mr-2 min-w-[16px]"></i>
+                                ${sekolah} ${isMatch ? '<span class="ml-2 text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-semibold inline-block border border-green-200">Pencarian Anda</span>' : ''}
                             </li>
                         `;
                     });
